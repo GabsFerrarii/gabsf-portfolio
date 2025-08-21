@@ -1,19 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import tailwindcss from '@tailwindcss/vite'
-import path from 'path' // Importa o módulo 'path' do Node.js
+import { fileURLToPath, URL } from 'url'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    tailwindcss(),
+    // O plugin do TailwindCSS não é mais necessário aqui
   ],
   resolve: {
     alias: {
-      // A linha abaixo diz ao Vite: "Sempre que você ver '@' em um caminho de importação,
-      // substitua-o pelo caminho físico para a pasta 'src' do projeto."
-      '@': path.resolve(__dirname, './src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
 })
