@@ -11,6 +11,7 @@ export const translations = {
       name: 'Gabriel Ferreira',
       role: 'e sou Desenvolvedor Web',
       resume: 'Currículo',
+      resume_link: 'https://drive.google.com/file/d/1reK7N3095Tl3h8zi7qNAxE-_EEmUIHAe/view?usp=sharing',
     },
     about: {
       title: 'Sobre Mim',
@@ -111,6 +112,7 @@ export const translations = {
       name: 'Gabriel Ferreira',
       role: 'and I\'m a Web Developer',
       resume: 'Resume',
+      resume_link: 'https://drive.google.com/file/d/1Z25fO3bNaG6Q_o739iqntTrfAogNT9eo/view?usp=sharing',
     },
     about: {
       title: 'About Me',
