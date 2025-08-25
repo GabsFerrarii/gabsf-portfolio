@@ -2,20 +2,6 @@
 import { ref, onMounted, computed } from 'vue';
 import { translations } from '../translations.js';
 
-// --- LÓGICA DE TRADUÇÃO ---
-const lang = ref('pt');
-const texts = computed(() => translations[lang.value]);
-
-function toggleLanguage() {
-  lang.value = lang.value === 'pt' ? 'en' : 'pt';
-}
-
-const isMobileMenuOpen = ref(false);
-
-// --- ESTADO DAS ABAS ---
-const activeTab = ref('experience');
-
-// --- DADOS ESTRUTURAIS (NÃO-TRADUZÍVEIS) ---
 // Import de imagens
 import pfp from '@/assets/images/pfp.png';
 import bemtevista from '@/assets/images/Feed.png';
@@ -51,6 +37,14 @@ import astahIcon from '@/assets/images/techs/astah.png';
 import powerautoIcon from '@/assets/images/techs/powerauto.png';
 
 
+const lang = ref('pt');
+const texts = computed(() => translations[lang.value]);
+function toggleLanguage() {
+  lang.value = lang.value === 'pt' ? 'en' : 'pt';
+}
+const isMobileMenuOpen = ref(false);
+const activeTab = ref('experience');
+
 const skills = ref({
   frontend: [{ name: 'HTML', icon: htmlIcon }, { name: 'CSS', icon: cssIcon }, { name: 'JavaScript', icon: jsIcon }, { name: 'TypeScript', icon: tsIcon }, { name: 'React', icon: reactIcon }, { name: 'Vue.js', icon: vueIcon }, { name: 'Tailwind CSS', icon: tailwindIcon }, { name: 'Vite', icon: viteIcon },],
   backend: [{ name: 'Node.js', icon: nodeIcon }, { name: 'Next.js', icon: nextIcon }, { name: 'Python', icon: pythonIcon }, { name: 'C#', icon: csIcon }, { name: '.Net', icon: dotnetIcon }, { name: 'MySQL', icon: mysqlIcon }, { name: 'PostgreSQL', icon: postgreIcon }, { name: 'Prisma', icon: prismaIcon },],
@@ -58,7 +52,7 @@ const skills = ref({
   outros: [{ name: 'Git', icon: gitIcon }, { name: 'MS Power Automate', icon: powerautoIcon }, { name: 'OracleVM', icon: oracleIcon }, { name: 'Cisco Packet Tracer', icon: ciscoIcon }, { name: 'Astah UML', icon: astahIcon },]
 });
 
-// Dados base da timeline (agora com IDs)
+// TIMELINE
 const timelineItemsBase = ref([
   { id: 'linqa', type: 'work' },
   { id: 'ufrn', type: 'education' },
@@ -66,7 +60,7 @@ const timelineItemsBase = ref([
   { id: 'ifrn_tec', type: 'education' },
 ]);
 
-// Dados base dos projetos (agora com IDs)
+// PROJETOS
 const projectsBase = ref([
   { id: 'linqa', title: 'LinQA Seguros', year: '2025', image: linqa, tags: [reactIcon, nextIcon, tailwindIcon], liveLink: 'www.linqaseguros.com.br' },
   { id: 'bemtevista', title: 'Bem te vista', year: '2024', image: bemtevista, tags: [reactIcon, tailwindIcon, viteIcon, nodeIcon, mysqlIcon, prismaIcon], figmaLink: 'https://www.figma.com/design/hh1PhHCgeZTkGHY2G7aodO/Bem-te-vista?m=auto&t=i7UMDbc3K6X779rm-6', repoLink: 'https://github.com/GabsFerrarii/Bem-te-vista' },
@@ -74,9 +68,8 @@ const projectsBase = ref([
   { id: 'periodicos', title: 'Portal de Periódicos', year: '2023', image: periodicos, tags: [figmaIcon], figmaLink: 'https://www.figma.com/design/rfU5C1QPJwQjoSptRTVm01/Prot%C3%B3tipos-site-de-peri%C3%B3dicos?m=auto&t=i7UMDbc3K6X779rm-6' },
 ]);
 
-// --- DADOS COMPUTADOS (TRADUZIDOS) ---
 
-// Gera a lista de projetos traduzida dinamicamente
+// Gera a lista de projetos traduzida
 const projects = computed(() => {
   return projectsBase.value.map(project => ({
     ...project,
@@ -84,7 +77,7 @@ const projects = computed(() => {
   }));
 });
 
-// Gera a timeline traduzida dinamicamente
+// Gera a linha do tempo traduzida
 const timelineItems = computed(() => {
   return timelineItemsBase.value.map(baseItem => {
     const translatedContent = texts.value.timeline[baseItem.type][baseItem.id];
@@ -95,18 +88,17 @@ const timelineItems = computed(() => {
   }).sort((a, b) => parseInt(b.period) - parseInt(a.period));
 });
 
-// Filtra a timeline para experiência
+// Filtra a linha do tempo para experiência
 const workExperience = computed(() =>
   timelineItems.value.filter(item => item.type === 'work')
 );
 
-// Filtra a timeline para educação
+// Filtra a timeline para formacao academica
 const educationHistory = computed(() =>
   timelineItems.value.filter(item => item.type === 'education')
 );
 
-
-// --- LÓGICA DE ANIMAÇÃO ---
+// ANIMAÇÃO
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -125,10 +117,8 @@ onMounted(() => {
 
 
 <template>
-  <!-- SEÇÃO HERO -->
+  <!-- SEÇÃO INICIAL -->
   <section class="parallax bg1 h-[100dvh] flex flex-col text-[#F5F5F3]">
-    <!-- CABEÇALHO RESPONSIVO -->
-    <!-- Em telas pequenas (mobile), o menu de navegação é ocultado -->
     <header class="mx-auto w-11/12 flex justify-between items-center py-8 relative z-30">
         <a href="/" class="text-2xl font-bold flex items-center">Gabs<span class="text-[#F8E509] mr-1">F</span><svg
             width="25" viewBox="0 0 92 87" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +128,7 @@ onMounted(() => {
             </svg>
         </a>
         
-        <!-- Menu de Navegação para Desktop -->
+        <!-- Menu Desktop -->
         <nav class="hidden md:flex items-center gap-8 text-lg font-semibold">
             <a href="#sobre" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.about }}</a>
             <a href="#habilidades" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.skills }}</a>
@@ -148,7 +138,6 @@ onMounted(() => {
               class="hover:scale-110 flex items-center"
               :title="lang === 'pt' ? 'Switch to English' : 'Mudar para Português'">
 
-              <!-- Mostra a bandeira dos EUA se o idioma atual for Português -->
               <div v-if="lang === 'pt'">
                 <svg width="33" height="25" viewBox="0 0 33 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_153_249)">
@@ -235,7 +224,6 @@ onMounted(() => {
 
               </div>
 
-              <!-- Mostra a bandeira do Brasil se o idioma atual for Inglês -->
               <div v-else>
                 <svg width="34" height="25" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_153_284)">
@@ -263,7 +251,6 @@ onMounted(() => {
             </button>
         </nav>
 
-        <!-- Botão de Menu para Mobile -->
         <div class="md:hidden">
             <button @click="isMobileMenuOpen = true" class="text-white focus:outline-none">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -271,7 +258,7 @@ onMounted(() => {
         </div>
     </header>
 
-    <!-- Menu Lateral para Mobile -->
+    <!-- Menu Mobile -->
     <div v-if="isMobileMenuOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40" @click="isMobileMenuOpen = false"></div>
     <div :class="['fixed top-0 right-0 h-full w-64 bg-[#0A1D3E] shadow-lg transform transition-transform duration-300 ease-in-out z-50', isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full']">
         <div class="flex justify-end p-4">
@@ -288,7 +275,6 @@ onMounted(() => {
               class="hover:scale-110 flex items-center"
               :title="lang === 'pt' ? 'Switch to English' : 'Mudar para Português'">
 
-              <!-- Mostra a bandeira dos EUA se o idioma atual for Português -->
               <div v-if="lang === 'pt'">
                 <svg width="33" height="25" viewBox="0 0 33 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_153_249)">
@@ -375,7 +361,6 @@ onMounted(() => {
 
               </div>
 
-              <!-- Mostra a bandeira do Brasil se o idioma atual for Inglês -->
               <div v-else>
                 <svg width="34" height="25" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_153_284)">
@@ -404,11 +389,8 @@ onMounted(() => {
         </nav>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL RESPONSIVO -->
-    <!-- O layout muda de coluna invertida para linha, e o alinhamento de texto muda de centralizado para a direita -->
     <div class="w-11/12 mx-auto flex-grow flex flex-col-reverse justify-center items-center gap-8 md:flex-row md:justify-center md:gap-12 pb-12">
         
-        <!-- Bloco de Texto: Tamanhos de fonte e alinhamento responsivos -->
         <div class="flex flex-col gap-4 text-center md:text-right">
             <p class="text-3xl md:text-4xl lg:text-5xl font-semibold text-shadow-lg">{{ texts.hero.greeting }}</p>
             <h1 class="text-5xl md:text-6xl font-bold text-[#F8E509] text-shadow-lg">
@@ -416,7 +398,6 @@ onMounted(() => {
             </h1>
             <p class="text-xl md:text-2xl font-semibold text-shadow-lg">{{ texts.hero.role }}</p>
             
-            <!-- Links Sociais e Currículo: Itens centralizados no mobile e alinhados à direita no desktop -->
             <ul class="flex items-center justify-center md:justify-end gap-6 mt-4">
                 <li>
                     <a href="https://github.com/GabsFerrarii" target="_blank" title="GitHub"
@@ -445,7 +426,6 @@ onMounted(() => {
             </ul>
         </div>
         
-        <!-- Imagem e Estrelas: Tamanhos e posições responsivas -->
         <figure class="relative w-64 h-64 lg:w-[26rem] lg:h-auto">
             <svg class="absolute -top-8 -right-8 w-24 md:-top-12 md:-right-20 md:w-[14rem] z-0" viewBox="0 0 263 274" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -464,21 +444,18 @@ onMounted(() => {
 </section>
 
 
-  <!-- SEÇÃO SOBRE MIM (REFEITA COM ABAS) -->
+  <!-- SEÇÃO SOBRE MIM -->
   <section class="pt-20 bg-[#F8F8F8]" id="sobre">
     <div class="mx-auto w-9/12">
       <h2 class="text-center text-4xl font-semibold text-[#0A1D3E] mb-16 animate-on-scroll">{{ texts.about.title }}</h2>
 
-      <!-- Layout de 2 colunas -->
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
 
-        <!-- Coluna Esquerda: Apresentação (MODIFICADA) -->
         <div class="lg:col-span-2 animate-on-scroll">
           <h3 class="font-semibold text-3xl mb-4 text-[#002668]">{{ texts.about.who_am_i }}</h3>
           <p class="text-lg text-gray-700 leading-relaxed" v-html="texts.about.bio">
           </p>
 
-          <!-- NOVO CONTEÚDO VISUAL -->
           <div class="mt-8">
             <h4 class="font-semibold text-xl mb-3 text-gray-700">{{ texts.about.competencies }}</h4>
             <div class="flex flex-wrap gap-2">
@@ -492,13 +469,10 @@ onMounted(() => {
                 texts.about.competencies_list[3] }}</span>
             </div>
           </div>
-          <!-- FIM DO NOVO CONTEÚDO -->
 
         </div>
 
-        <!-- Coluna Direita: Abas de Experiência e Formação -->
         <div class="lg:col-span-3 animate-on-scroll">
-          <!-- Botões das Abas -->
           <div class="flex items-center gap-8 mb-6">
             <button @click="activeTab = 'experience'"
               :class="['font-semibold text-3xl transition-colors duration-300', activeTab === 'experience' ? 'text-[#002668]' : 'text-gray-400 hover:text-gray-600']">
@@ -510,7 +484,6 @@ onMounted(() => {
             </button>
           </div>
 
-          <!-- Conteúdo da Experiência Profissional -->
           <div v-if="activeTab === 'experience'" class="space-y-8 relative border-l-2 border-gray-200 pl-8">
             <div v-for="item in workExperience" :key="item.title" class="relative">
               <div class="absolute -left-[38px] top-1 h-3 w-3 rounded-full bg-[#002668]"></div>
@@ -520,7 +493,6 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Conteúdo da Formação Acadêmica -->
           <div v-if="activeTab === 'education'" class="space-y-8 relative border-l-2 border-gray-200 pl-8">
             <div v-for="item in educationHistory" :key="item.title" class="relative">
               <div class="absolute -left-[38px] top-1 h-3 w-3 rounded-full bg-[#002668]"></div>
@@ -536,12 +508,9 @@ onMounted(() => {
 
   <!-- SEÇÃO HABILIDADES -->
 <section class="py-20 bg-[#F8F8F8]" id="habilidades">
-    <!-- O container principal agora usa flex-col em telas pequenas e lg:flex-row em telas grandes -->
     <div class="flex flex-col lg:flex-row justify-between items-center w-9/12 mx-auto gap-16 lg:gap-8">
         
-        <!-- Bloco da Citação: Ocupa a largura total em telas pequenas -->
         <div class="w-full lg:w-[40%] relative animate-on-scroll">
-            <!-- O SVG decorativo é oculto em telas pequenas (hidden) para não quebrar o layout -->
             <span class="hidden lg:block absolute -top-20 -left-40 text-[12rem] font-serif text-gray-200 -z-0">
                 <svg width="145" height="115" viewBox="0 0 145 115" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -549,17 +518,14 @@ onMounted(() => {
                         fill="#BE953F" stroke="#BE953F" stroke-width="6" />
                 </svg>
             </span>
-            <!-- Tamanho da fonte e alinhamento do texto ajustados para mobile -->
             <p class="text-4xl lg:text-6xl font-semibold text-[#002668] relative z-10 text-center lg:text-left" v-html="texts.skills.quote"></p>
             <p class="text-xl mt-2 text-center lg:text-right lg:pr-12 text-gray-500 relative z-10">{{ texts.skills.author }}</p>
         </div>
 
-        <!-- Bloco de Habilidades: Ocupa a largura total e centraliza os itens em telas pequenas -->
         <div class="w-full lg:w-7/12 flex flex-col gap-6 items-center text-center lg:items-end lg:text-right">
             <template v-for="(skillList, category) in skills" :key="category">
                 <div v-if="skillList.length > 0" class="animate-on-scroll w-full">
                     <h3 class="font-semibold text-xl capitalize text-[#0A1D3E] mb-3">{{ texts.skills.categories[category] }}</h3>
-                    <!-- A lista de ícones é centralizada no mobile e alinhada à direita no desktop -->
                     <ul class="flex flex-wrap justify-center lg:justify-end items-center gap-4">
                         <li v-for="skill in skillList" :key="skill.name" class="p-2 bg-white rounded-full shadow-md">
                             <img :src="skill.icon" :alt="skill.name" class="w-12 h-12 p-1 object-contain" :title="skill.name" />
@@ -613,16 +579,13 @@ onMounted(() => {
 <section id="contato" class="w-11/12 md:w-9/12 mx-auto py-16 md:py-0">
     <h2 class="text-center text-3xl md:text-4xl font-semibold text-white pb-12 animate-on-scroll">{{ texts.contact.title }}</h2>
     
-    <!-- O container agora é flex-col em mobile e lg:flex-row em desktop -->
     <div class="flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-16">
         
-        <!-- Bloco de Texto: Alinhamento e tamanho da fonte responsivos -->
         <div class="w-full lg:w-5/12 text-white animate-on-scroll text-center lg:text-right">
             <h3 class="text-4xl md:text-5xl lg:text-6xl font-bold" v-html="texts.contact.heading"></h3>
             <p class="text-lg md:text-xl mt-6">
                 {{ texts.contact.subheading }}
             </p>
-            <!-- Ícones: Centralizados no mobile, alinhados à direita no desktop -->
             <div class="flex justify-center lg:justify-end items-center gap-6 mt-8">
                 <a href="https://github.com/GabsFerrarii" target="_blank" title="GitHub"
                     class="text-white hover:text-[#F8E509] transition-colors">
@@ -643,7 +606,6 @@ onMounted(() => {
             </div>
         </div>
         
-        <!-- Formulário: Ocupa a largura total no mobile e 7/12 no desktop -->
         <form @submit.prevent="handleSubmit"
             class="flex flex-col gap-5 p-8 text-left rounded-lg bg-white/95 backdrop-blur-sm w-10/12 lg:w-7/12 shadow-2xl animate-on-scroll">
             <div class="flex flex-col">
@@ -673,7 +635,7 @@ onMounted(() => {
 </section>
 
 
-    <!-- RODAPÉ -->
+    <!-- FOOTER -->
     <footer class="text-white py-16">
       <div class="flex justify-between items-center w-11/12 mx-auto">
         <p>© {{ new Date().getFullYear() }} • {{ texts.footer.developed_by }}</p>
@@ -700,7 +662,6 @@ onMounted(() => {
               </svg>
             </a>
           </li>
-          <!-- NOVO ÍCONE DE E-MAIL -->
           <li>
             <a href="mailto:gabesferreira15@gmail.com" title="E-mail"
               class="text-gray-300 hover:text-white transition-colors">
@@ -740,20 +701,17 @@ onMounted(() => {
 
 /* --- ESTILOS DE ANIMAÇÃO --- */
 
-/* Define o estado inicial dos elementos que serão animados */
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* Define o estado final (visível) quando a classe é adicionada via JavaScript */
 .animate-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Desativa o parallax em telas menores para melhor performance */
 @media (max-width: 1024px) {
   .parallax {
     background-attachment: scroll;
