@@ -69,7 +69,6 @@ const projectsBase = ref([
 ]);
 
 
-// Gera a lista de projetos traduzida
 const projects = computed(() => {
   return projectsBase.value.map(project => ({
     ...project,
@@ -77,7 +76,6 @@ const projects = computed(() => {
   }));
 });
 
-// Gera a linha do tempo traduzida
 const timelineItems = computed(() => {
   return timelineItemsBase.value.map(baseItem => {
     const translatedContent = texts.value.timeline[baseItem.type][baseItem.id];
@@ -88,17 +86,14 @@ const timelineItems = computed(() => {
   }).sort((a, b) => parseInt(b.period) - parseInt(a.period));
 });
 
-// Filtra a linha do tempo para experiência
 const workExperience = computed(() =>
   timelineItems.value.filter(item => item.type === 'work')
 );
 
-// Filtra a timeline para formacao academica
 const educationHistory = computed(() =>
   timelineItems.value.filter(item => item.type === 'education')
 );
 
-// ANIMAÇÃO
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -132,27 +127,40 @@ async function handleSubmit(event) {
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-
     if (!response.ok) {
-      throw new Error(result.message || 'Erro desconhecido.');
+      let errorMessage = `Erro no servidor: ${response.status}`;
+      try {
+        const errorResult = await response.json();
+        errorMessage = errorResult.message || errorMessage;
+      } catch (e) {
+      }
+      throw new Error(errorMessage);
     }
 
+    const responseBody = await response.text();
+    if (!responseBody) {
+        console.log("Sucesso, mas sem corpo de resposta.");
+        formStatus.value.success = true;
+        event.target.reset();
+        return; // Termina a função aqui
+    }
+
+    const result = JSON.parse(responseBody);
     formStatus.value.success = true;
     event.target.reset(); // Limpa o formulário
+
   } catch (error) {
     formStatus.value.error = error.message;
   } finally {
     formStatus.value.submitting = false;
   }
 }
-
 </script>
 
 
 <template>
   <!-- SEÇÃO INICIAL -->
-  <section class="parallax bg1 h-[100dvh] flex flex-col text-[#F5F5F3]">
+  <section class="parallax bg1 lg:h-[100dvh] flex flex-col text-[#F5F5F3]">
     <header class="mx-auto w-11/12 flex justify-between items-center py-8 relative z-30">
         <a href="/" class="text-2xl font-bold flex items-center">Gabs<span class="text-[#F8E509] mr-1">F</span><svg
             width="25" viewBox="0 0 92 87" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -574,7 +582,7 @@ async function handleSubmit(event) {
 
   <!-- SEÇÃO PROJETOS -->
   <section class="parallax bg2 bg-cover pt-20">
-    <section id="projetos" class="w-9/12 mx-auto mb-20">
+    <section id="projetos" class="w-9/12 mx-auto lg:mb-20">
       <h2 class="text-center text-4xl font-semibold text-white pb-12 animate-on-scroll">{{ texts.projects.title }}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="(project, index) in projects" :key="project.title"
@@ -587,8 +595,8 @@ async function handleSubmit(event) {
               <p class="text-gray-500">({{ project.year }})</p>
             </span>
             <p class="text-gray-600 mb-4 flex-grow">{{ project.description }}</p>
-            <div class="flex justify-between items-center mt-auto">
-              <ul class="flex items-center gap-2">
+            <div class="flex flex-col gap-4 lg:gap-0 lg:flex-row justify-between items-center mt-auto">
+              <ul class="flex  items-center gap-2">
                 <li v-for="(tag, i) in project.tags" :key="i">
                   <img :src="tag" class="w-8 h-8 object-contain" />
                 </li>
@@ -645,15 +653,15 @@ async function handleSubmit(event) {
         <!-- Inputs do formulário (nome, email, mensagem) -->
         <div class="flex flex-col">
           <label for="nome" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.name }}</label>
-          <input name="nome" id="nome" type="text" :placeholder="texts.contact.form.name_placeholder" required class="..." />
+          <input name="nome" id="nome" type="text" :placeholder="texts.contact.form.name_placeholder" required class="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300" />
         </div>
         <div class="flex flex-col">
             <label for="email" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.email }}</label>
-            <input name="email" id="email" type="email" :placeholder="texts.contact.form.email_placeholder" required class="..." />
+            <input name="email" id="email" type="email" :placeholder="texts.contact.form.email_placeholder" required class="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300" />
         </div>
         <div class="flex flex-col">
             <label for="mensagem" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.message }}</label>
-            <textarea name="mensagem" id="mensagem" :placeholder="texts.contact.form.message_placeholder" required class="..."></textarea>
+            <textarea name="mensagem" id="mensagem" :placeholder="texts.contact.form.message_placeholder" required class="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300 min-h-[120px]"></textarea>
         </div>
         
         <!-- Botão de Envio e Mensagens de Status -->
