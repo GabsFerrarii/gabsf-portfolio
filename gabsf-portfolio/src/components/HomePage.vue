@@ -113,6 +113,40 @@ onMounted(() => {
   const elementsToAnimate = document.querySelectorAll('.animate-on-scroll');
   elementsToAnimate.forEach(el => observer.observe(el));
 });
+
+const formStatus = ref({
+  submitting: false,
+  success: false,
+  error: '',
+});
+
+async function handleSubmit(event) {
+  formStatus.value = { submitting: true, success: false, error: '' };
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Erro desconhecido.');
+    }
+
+    formStatus.value.success = true;
+    event.target.reset(); // Limpa o formulário
+  } catch (error) {
+    formStatus.value.error = error.message;
+  } finally {
+    formStatus.value.submitting = false;
+  }
+}
+
 </script>
 
 
@@ -419,7 +453,7 @@ onMounted(() => {
                 </li>
                 <li>
                     <a :href="texts.hero.resume_link" target="_blank"
-                        class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 bg-[#F5F5F3] rounded-lg font-semibold text-lg md:text-xl text-gray-800 hover:bg-gray-200 transition-transform transform hover:scale-105">
+                        class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-[0.55rem] bg-[#F5F5F3] rounded-lg font-semibold text-lg md:text-xl text-gray-800 hover:bg-gray-200 transition-transform transform hover:scale-105">
                         {{ texts.hero.resume }}
                     </a>
                 </li>
@@ -518,7 +552,7 @@ onMounted(() => {
                         fill="#BE953F" stroke="#BE953F" stroke-width="6" />
                 </svg>
             </span>
-            <p class="text-4xl lg:text-6xl font-semibold text-[#002668] relative z-10 text-center lg:text-left" v-html="texts.skills.quote"></p>
+            <p class="text-4xl lg:text-5xl font-semibold text-[#002668] relative z-10 text-center lg:text-left" v-html="texts.skills.quote"></p>
             <p class="text-xl mt-2 text-center lg:text-right lg:pr-12 text-gray-500 relative z-10">{{ texts.skills.author }}</p>
         </div>
 
@@ -528,7 +562,7 @@ onMounted(() => {
                     <h3 class="font-semibold text-xl capitalize text-[#0A1D3E] mb-3">{{ texts.skills.categories[category] }}</h3>
                     <ul class="flex flex-wrap justify-center lg:justify-end items-center gap-4">
                         <li v-for="skill in skillList" :key="skill.name" class="p-2 bg-white rounded-full shadow-md">
-                            <img :src="skill.icon" :alt="skill.name" class="w-12 h-12 p-1 object-contain" :title="skill.name" />
+                            <img :src="skill.icon" :alt="skill.name" class="w-10 h-10 p-1 object-contain" :title="skill.name" />
                         </li>
                     </ul>
                 </div>
@@ -538,7 +572,7 @@ onMounted(() => {
 </section>
 
 
-  <!-- SEÇÃO PROJETOS E CONTATO -->
+  <!-- SEÇÃO PROJETOS -->
   <section class="parallax bg2 bg-cover pt-20">
     <section id="projetos" class="w-9/12 mx-auto mb-20">
       <h2 class="text-center text-4xl font-semibold text-white pb-12 animate-on-scroll">{{ texts.projects.title }}</h2>
@@ -606,31 +640,34 @@ onMounted(() => {
             </div>
         </div>
         
-        <form @submit.prevent="handleSubmit"
-            class="flex flex-col gap-5 p-8 text-left rounded-lg bg-white/95 backdrop-blur-sm w-10/12 lg:w-7/12 shadow-2xl animate-on-scroll">
-            <div class="flex flex-col">
-                <label for="nome" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.name }}</label>
-                <input
-                    class="px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300"
-                    id="nome" name="nome" type="text" :placeholder="texts.contact.form.name_placeholder" required />
-            </div>
-            <div class="flex flex-col">
-                <label for="email" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.email }}</label>
-                <input
-                    class="px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300"
-                    id="email" name="email" type="email" :placeholder="texts.contact.form.email_placeholder" required />
-            </div>
-            <div class="flex flex-col">
-                <label for="mensagem" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.message }}</label>
-                <textarea
-                    class="px-4 py-3 bg-gray-100 rounded-lg min-h-[120px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300"
-                    id="mensagem" name="mensagem" :placeholder="texts.contact.form.message_placeholder" required></textarea>
-            </div>
-            <button type="submit"
-                class="rounded-lg bg-[#002668] px-6 py-3 text-white w-fit self-end font-semibold hover:bg-[#0A1D3E] transition-transform transform hover:scale-105">
-                {{ texts.contact.form.submit }}
+        <!-- FORMULÁRIO MODIFICADO -->
+      <form @submit.prevent="handleSubmit" class="flex flex-col gap-5 p-8 text-left rounded-lg bg-white/95 backdrop-blur-sm w-full lg:w-7/12 shadow-2xl animate-on-scroll">
+        <!-- Inputs do formulário (nome, email, mensagem) -->
+        <div class="flex flex-col">
+          <label for="nome" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.name }}</label>
+          <input name="nome" id="nome" type="text" :placeholder="texts.contact.form.name_placeholder" required class="..." />
+        </div>
+        <div class="flex flex-col">
+            <label for="email" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.email }}</label>
+            <input name="email" id="email" type="email" :placeholder="texts.contact.form.email_placeholder" required class="..." />
+        </div>
+        <div class="flex flex-col">
+            <label for="mensagem" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.message }}</label>
+            <textarea name="mensagem" id="mensagem" :placeholder="texts.contact.form.message_placeholder" required class="..."></textarea>
+        </div>
+        
+        <!-- Botão de Envio e Mensagens de Status -->
+        <div class="flex justify-end items-center mt-2">
+            <p v-if="formStatus.success" class="text-green-600 font-semibold">{{ texts.contact.form.success_message }}</p>
+            <p v-if="formStatus.error" class="text-red-600 font-semibold">{{ formStatus.error }}</p>
+
+            <button type="submit" :disabled="formStatus.submitting"
+                    class="rounded-lg bg-[#002668] px-6 py-3 text-white w-fit self-end font-semibold hover:bg-[#0A1D3E] transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+              <span v-if="formStatus.submitting">{{ texts.contact.form.submitting }}</span>
+              <span v-else>{{ texts.contact.form.submit }}</span>
             </button>
-        </form>
+        </div>
+      </form>
     </div>
 </section>
 

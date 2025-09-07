@@ -28,7 +28,7 @@ export const translations = {
       categories: {
         frontend: 'Frontend',
         backend: 'Backend',
-        producao: 'Produção',
+        producao: 'Produção de conteúdo',
         outros: 'Outros',
       }
     },
@@ -129,7 +129,7 @@ export const translations = {
       categories: {
         frontend: 'Frontend',
         backend: 'Backend',
-        producao: 'Production',
+        producao: 'Content Production',
         outros: 'Others',
       }
     },
