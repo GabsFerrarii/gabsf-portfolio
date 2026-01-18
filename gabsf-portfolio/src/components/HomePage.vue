@@ -675,7 +675,7 @@ function scrollToSection(sectionId) {
         </div>
         <div class="flex flex-col">
             <label for="mensagem" class="mb-1 font-semibold text-gray-700">{{ texts.contact.form.message }}</label>
-            <textarea name="mensagem" id="mensagem" :placeholder="texts.contact.form.message_placeholder" required class="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300 min-h-[120px]"></textarea>
+            <textarea name="mensagem" id="mensagem" :placeholder="texts.contact.form.message_placeholder" required class="w-full px-4 py-3 bg-gray-100 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#002668] focus:bg-white transition-all duration-300 min-h-[120px] max-h-[30rem]"></textarea>
         </div>
         
         <!-- Botão de Envio e Mensagens de Status -->

@@ -75,7 +75,7 @@ export const translations = {
           title: 'Graduando em Tecnologia da Informação',
           subtitle: 'UFRN - Campus Natal',
           period: '2025 - Cursando',
-          description: ''
+          description: 'Atualmente, sou graduando no Bacharelado Interdisciplinar em Tecnologia da Informação pelo Instituto Metrópole Digital (IMD/UFRN). Estudar em um polo de inovação tem sido fundamental para expandir minha visão técnica. Busco aproveitar esse ecossistema para desenvolver projetos práticos, colaborar com outros profissionais e aprimorar continuamente minhas habilidades como desenvolvedor.'
         },
         ifrn_tec: {
           title: 'Técnico em Informática para Internet',
@@ -176,10 +176,10 @@ export const translations = {
           title: 'Bachelor\'s Degree in Information Technology',
           subtitle: 'UFRN - Campus Natal',
           period: '2025 - Present',
-          description: ''
+          description: 'I am currently pursuing an Interdisciplinary Bachelor\'s in Information Technology at the Instituto Metrópole Digital (IMD/UFRN). Studying at such an innovation hub has been essential for expanding my technical vision. I aim to leverage this ecosystem to develop practical projects, collaborate with peers, and continuously hone my skills as a software developer.'
         },
         ifrn_tec: {
-          title: 'Technician in Informatics for the Internet',
+          title: 'Technical Diploma in Informatics for the Internet',
           subtitle: 'IFRN - Campus Natal-Central',
           period: '2021 - 2025',
           description: 'Technical training focused on the complete cycle of web application development, where I developed skills in project organization and diagramming, design planning and prototyping (UX/UI), and server deployment. This knowledge was consolidated through the creation of practical projects, such as a fashion-based social network, a book exchange platform, and a 2D game in Pygame.'
