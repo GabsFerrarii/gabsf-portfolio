@@ -35,6 +35,10 @@ import oracleIcon from '@/assets/images/techs/oracle.png';
 import ciscoIcon from '@/assets/images/techs/cisco.png';
 import astahIcon from '@/assets/images/techs/astah.png';
 import powerautoIcon from '@/assets/images/techs/powerauto.png';
+import n8nIcon from '@/assets/images/techs/n8n.png';
+import makeIcon from '@/assets/images/techs/make.png';
+import azureIcon from '@/assets/images/techs/azure.png';
+
 
 
 const lang = ref('pt');
@@ -47,9 +51,9 @@ const activeTab = ref('experience');
 
 const skills = ref({
   frontend: [{ name: 'HTML', icon: htmlIcon }, { name: 'CSS', icon: cssIcon }, { name: 'JavaScript', icon: jsIcon }, { name: 'TypeScript', icon: tsIcon }, { name: 'React', icon: reactIcon }, { name: 'Vue.js', icon: vueIcon }, { name: 'Tailwind CSS', icon: tailwindIcon }, { name: 'Vite', icon: viteIcon },],
-  backend: [{ name: 'Node.js', icon: nodeIcon }, { name: 'Next.js', icon: nextIcon }, { name: 'Python', icon: pythonIcon }, { name: 'C#', icon: csIcon }, { name: '.Net', icon: dotnetIcon }, { name: 'MySQL', icon: mysqlIcon }, { name: 'PostgreSQL', icon: postgreIcon }, { name: 'Prisma', icon: prismaIcon },],
+  backend: [{ name: 'Node.js', icon: nodeIcon }, { name: 'Next.js', icon: nextIcon }, { name: 'Python', icon: pythonIcon }, { name: 'C#', icon: csIcon }, { name: '.Net', icon: dotnetIcon }, { name: 'MySQL', icon: mysqlIcon }, { name: 'PostgreSQL', icon: postgreIcon }, { name: 'Prisma', icon: prismaIcon }, { name: 'Azure', icon: azureIcon },],
   producao: [{ name: 'Figma', icon: figmaIcon }, { name: 'Photoshop', icon: photoshopIcon }, { name: 'Lightroom', icon: lightroomIcon }, { name: 'Davinci Resolve', icon: davinciIcon },],
-  outros: [{ name: 'Git', icon: gitIcon }, { name: 'MS Power Automate', icon: powerautoIcon }, { name: 'OracleVM', icon: oracleIcon }, { name: 'Cisco Packet Tracer', icon: ciscoIcon }, { name: 'Astah UML', icon: astahIcon },]
+  outros: [{ name: 'Git', icon: gitIcon }, { name: 'n8n', icon: n8nIcon }, { name: 'Make', icon: makeIcon }, { name: 'MS Power Automate', icon: powerautoIcon }, { name: 'OracleVM', icon: oracleIcon }, { name: 'Cisco Packet Tracer', icon: ciscoIcon }, { name: 'Astah UML', icon: astahIcon },]
 });
 
 // TIMELINE
@@ -155,6 +159,16 @@ async function handleSubmit(event) {
     formStatus.value.submitting = false;
   }
 }
+
+function scrollToSection(sectionId) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+  // Fecha o menu mobile se estiver aberto
+  isMobileMenuOpen.value = false;
+}
+
 </script>
 
 
@@ -172,10 +186,10 @@ async function handleSubmit(event) {
         
         <!-- Menu Desktop -->
         <nav class="hidden md:flex items-center gap-8 text-lg font-semibold">
-            <a href="#sobre" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.about }}</a>
-            <a href="#habilidades" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.skills }}</a>
-            <a href="#projetos" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.projects }}</a>
-            <a href="#contato" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.contact }}</a>
+            <a href="#sobre" @click.prevent="scrollToSection('sobre')" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.about }}</a>
+            <a href="#habilidades" @click.prevent="scrollToSection('habilidades')" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.skills }}</a>
+            <a href="#projetos" @click.prevent="scrollToSection('projetos')" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.projects }}</a>
+            <a href="#contato" @click.prevent="scrollToSection('contato')" class="hover:text-[#F8E509] transition-colors">{{ texts.nav.contact }}</a>
             <button @click="toggleLanguage"
               class="hover:scale-110 flex items-center"
               :title="lang === 'pt' ? 'Switch to English' : 'Mudar para Português'">
@@ -309,10 +323,10 @@ async function handleSubmit(event) {
             </button>
         </div>
         <nav class="flex flex-col items-center gap-8 mt-10">
-            <a @click="isMobileMenuOpen = false" href="#sobre" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.about }}</a>
-            <a @click="isMobileMenuOpen = false" href="#habilidades" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.skills }}</a>
-            <a @click="isMobileMenuOpen = false" href="#projetos" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.projects }}</a>
-            <a @click="isMobileMenuOpen = false" href="#contato" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.contact }}</a>
+            <a href="#sobre" @click.prevent="scrollToSection('sobre')" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.about }}</a>
+            <a href="#habilidades" @click.prevent="scrollToSection('habilidades')" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.skills }}</a>
+            <a href="#projetos" @click.prevent="scrollToSection('projetos')" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.projects }}</a>
+            <a href="#contato" @click.prevent="scrollToSection('contato')" class="text-2xl font-semibold hover:text-[#F8E509] transition-colors">{{ texts.nav.contact }}</a>
             <button @click="toggleLanguage"
               class="hover:scale-110 flex items-center"
               :title="lang === 'pt' ? 'Switch to English' : 'Mudar para Português'">
@@ -581,8 +595,8 @@ async function handleSubmit(event) {
 
 
   <!-- SEÇÃO PROJETOS -->
-  <section class="parallax bg2 bg-cover pt-20">
-    <section id="projetos" class="w-9/12 mx-auto lg:mb-20">
+  <section id="projetos" class="parallax bg2 bg-cover pt-20">
+    <section  class="w-9/12 mx-auto lg:mb-20">
       <h2 class="text-center text-4xl font-semibold text-white pb-12 animate-on-scroll">{{ texts.projects.title }}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="(project, index) in projects" :key="project.title"
