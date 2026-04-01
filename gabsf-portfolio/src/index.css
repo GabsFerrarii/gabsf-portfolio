@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 216 72% 14%;
+    --foreground: 40 14% 96%;
+
+    --card: 216 72% 10%;
+    --card-foreground: 40 14% 96%;
+
+    --popover: 216 72% 10%;
+    --popover-foreground: 40 14% 96%;
+
+    --primary: 54 95% 50%;
+    --primary-foreground: 216 72% 10%;
+
+    --secondary: 216 60% 20%;
+    --secondary-foreground: 40 14% 96%;
+
+    --muted: 216 50% 18%;
+    --muted-foreground: 216 20% 60%;
+
+    --accent: 54 95% 50%;
+    --accent-foreground: 216 72% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 14% 96%;
+
+    --border: 216 40% 22%;
+    --input: 216 40% 22%;
+    --ring: 54 95% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 216 72% 10%;
+    --sidebar-foreground: 40 14% 96%;
+    --sidebar-primary: 54 95% 50%;
+    --sidebar-primary-foreground: 216 72% 10%;
+    --sidebar-accent: 216 60% 20%;
+    --sidebar-accent-foreground: 40 14% 96%;
+    --sidebar-border: 216 40% 22%;
+    --sidebar-ring: 54 95% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .star-particle {
+    @apply absolute rounded-full bg-foreground/20;
+    animation: twinkle var(--duration, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  .section-container {
+    @apply max-w-5xl mx-auto px-6 py-20 md:py-28;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-12 font-heading;
+  }
+
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-md border border-border/50 rounded-xl;
+  }
+
+  .yellow-glow {
+    box-shadow: 0 0 30px hsl(54 95% 50% / 0.15);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
