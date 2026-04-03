@@ -9,7 +9,7 @@ const HeroSection = () => {
 
   const resumeUrl =
     lang === "pt"
-      ? "https://www.linkedin.com/in/gabes-ferreira/"
+      ? "https://drive.google.com/file/d/1D_9oI-7rnNjP4lx_dgm_iB-UureU0qtA/view?usp=sharing"
       : "https://drive.google.com/file/d/1UZHe_QhPd8pVARB6aXrQ3YSuZXrHfe7n/view?usp=sharing";
 
   return (

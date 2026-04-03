@@ -7,8 +7,18 @@ import bemTeVistaImg from "@/assets/bem-te-vista.png";
 import atlantisImg from "@/assets/atlantis.png";
 import periodicosImg from "@/assets/periodicos.png";
 import hollowShooterImg from "@/assets/hollow-shooter.png";
+import finopsImg from "@/assets/finops.png";
+
 const projects = {
   pt: [
+    {
+      title: "FinOps Dashboard",
+      year: "2026",
+      image: finopsImg,
+      desc: "Dashboard para análise de custos de serviços de nuvem, com foco em visualização de dados e otimização de custos.",
+      tags: ["React Native", "Expo", "Zustand", "NativeWind v4"],
+      links: { github: "https://github.com/GabsFerrarii/finops-dash" },
+    },
     {
       title: "LinQA Seguros",
       year: "2025",
@@ -60,6 +70,14 @@ const projects = {
     },
   ],
   en: [
+    {
+      title: "FinOps Dashboard",
+      year: "2026",
+      image: finopsImg,
+      desc: "Dashboard for analyzing cloud service costs, focusing on data visualization and cost optimization.",
+      tags: ["React Native", "Expo", "Zustand", "NativeWind v4"],
+      links: { github: "https://github.com/GabsFerrarii/finops-dash" },
+    },
     {
       title: "LinQA Seguros",
       year: "2025",
