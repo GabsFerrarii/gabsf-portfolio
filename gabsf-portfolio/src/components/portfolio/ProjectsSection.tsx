@@ -8,9 +8,18 @@ import atlantisImg from "@/assets/atlantis.png";
 import periodicosImg from "@/assets/periodicos.png";
 import hollowShooterImg from "@/assets/hollow-shooter.png";
 import finopsImg from "@/assets/finops.png";
+import reactrisImg from "@/assets/reactris.png";
 
 const projects = {
   pt: [
+    {
+      title: "Reactris",
+      year: "2026",
+      image: reactrisImg,
+      desc: "Um jogo de Tetris desenvolvido em React Native, otimizado para Android",
+      tags: ["React Native", "Expo", "Zustand"],
+      links: { github: "https://github.com/GabsFerrarii/reactris" },
+    },
     {
       title: "FinOps Dashboard",
       year: "2026",
@@ -24,7 +33,7 @@ const projects = {
       year: "2025",
       image: linqaImg,
       desc: "Website institucional e blog para corretora de seguros, com foco em performance (SEO) e design moderno para captação de leads.",
-      tags: ["React", "NextJS", "TailwindCSS"],
+      tags: ["React", "Vite", "TailwindCSS"],
       links: { live: "https://www.linqaseguros.com.br/" },
     },
     {
@@ -71,6 +80,14 @@ const projects = {
   ],
   en: [
     {
+      title: "Reactris",
+      year: "2026",
+      image: reactrisImg,
+      desc: "A Tetris game developed in React Native, optimized for Android",
+      tags: ["React Native", "Expo", "Zustand"],
+      links: { github: "https://github.com/GabsFerrarii/reactris" },
+    },
+    {
       title: "FinOps Dashboard",
       year: "2026",
       image: finopsImg,
@@ -83,7 +100,7 @@ const projects = {
       year: "2025",
       image: linqaImg,
       desc: "Institutional website and blog for an insurance brokerage, focused on performance (SEO) and modern design for lead generation.",
-      tags: ["React", "NextJS", "TailwindCSS"],
+      tags: ["React", "Vite", "TailwindCSS"],
       links: { live: "https://www.linqaseguros.com.br/" },
     },
     {

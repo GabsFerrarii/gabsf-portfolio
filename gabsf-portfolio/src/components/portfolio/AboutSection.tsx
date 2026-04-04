@@ -8,7 +8,7 @@ const experiences = {
       role: "Estagiário em Desenvolvimento",
       company: "LinQA Seguros",
       period: "2025 - Presente",
-      desc: "Liderei a transformação digital completa da empresa, gerenciando projetos-chave como o desenvolvimento do novo website (Next.js/Strapi) e a implementação de uma intranet no SharePoint. Estruturei fluxos de automação com Power Automate e unifiquei a identidade visual da marca.",
+      desc: "Liderei a transformação digital da empresa, estruturando o ecossistema tecnológico e operacional. Fui responsável pelo desenvolvimento do website e landing pages integradas ao Strapi e CRM, implementação de IA para atendimento, além da configuração de sistemas ERP e gestão de bases de dados. Conduzi a automação de fluxos operacionais, o desenvolvimento de soluções para análise de dados e a criação de uma intranet unificada para otimizar a performance da equipe.",
     },
     {
       role: "Desenvolvedor da Diretoria de Pesquisa",
@@ -22,7 +22,7 @@ const experiences = {
       role: "Development Intern",
       company: "LinQA Seguros",
       period: "2025 - Present",
-      desc: "Led the company's complete digital transformation, managing key projects like the new website (Next.js/Strapi) and SharePoint intranet implementation. Built automation flows with Power Automate and unified the brand's visual identity.",
+      desc: "I led the company's digital transformation by structuring its technological and operational ecosystem. I was responsible for developing the website and landing pages integrated with Strapi and CRM, implementing AI-powered customer support, and configuring ERP systems alongside database management. I also spearheaded operational workflow automation, developed business data analytics solutions, and built a unified intranet to enhance team performance.",
     },
     {
       role: "Research Department Developer",
